@@ -1,4 +1,6 @@
 ;; Prettify
+(load-theme 'tango-dark)
+
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (global-visual-line-mode 1)
