@@ -19,6 +19,10 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
+;; Enable emoji, and stop the UI from freezing when trying to display them.
+(when (fboundp 'set-fontset-font)
+  (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend))
+
 ;; Backups and Autosaves
 (defvar --backup-directory (concat user-emacs-directory "backups"))
 (if (not (file-exists-p --backup-directory))
