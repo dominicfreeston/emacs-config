@@ -3,9 +3,12 @@
 
 ;; List of required packages
 (setq package-selected-packages
-  '(
-    magit
-    ))
+      '(
+	clojure-mode
+	cider
+	magit
+	exec-path-from-shell
+	))
 
 ;; Setup archives and download packages
 (add-to-list 'package-archives
