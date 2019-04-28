@@ -6,7 +6,9 @@
   :config
   (exec-path-from-shell-initialize))
 
-(use-package magit)
+(use-package magit
+  :bind
+  ("C-x g" . magit-status))
 
 (use-package smartparens-config
   :ensure smartparens
