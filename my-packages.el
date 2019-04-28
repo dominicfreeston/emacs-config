@@ -1,24 +1,17 @@
-;; Load all installed packages
-(require 'package)
+;; Setup use-package
+(require 'use-package)
 
-;; List of required packages
-(setq package-selected-packages
-      '(
-	clojure-mode
-	cider
-	smartparens
-	magit
-	exec-path-from-shell
-	))
+(use-package exec-path-from-shell
+  :if (memq window-system '(mac ns))
+  :config
+  (exec-path-from-shell-initialize))
 
-;; Setup archives and download packages
-(add-to-list 'package-archives
-             '("melpa-stable" . "https://melpa.org/packages/") t)
+(use-package magit)
 
-(package-initialize)
+(use-package smartparens-config
+  :ensure smartparens
+  :config (smartparens-global-mode t))
 
-(when (not package-archive-contents)
-  (message "%s" "Emacs is now refreshing its package database...")
-  (package-refresh-contents))
+(use-package clojure-mode)
 
-(package-install-selected-packages)
+(use-package cider)

@@ -1,13 +1,12 @@
+;; Redirect custom
+(setq custom-file (concat user-emacs-directory ".emacs-custom.el"))
+(load custom-file)
+
 ;; Load packages
+(load (concat user-emacs-directory "my-packages-setup.el"))
 (load (concat user-emacs-directory "my-packages.el"))
 
 ;; Further package config
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
-
-(require 'smartparens-config)
-(smartparens-global-mode 1)
-
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
 
