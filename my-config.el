@@ -16,6 +16,7 @@
 ;; Sensible Defaults
 (setq ring-bell-function 'ignore)
 (setq mac-right-option-modifier nil)
+(setq mac-function-modifier 'hyper)
 (fset 'yes-or-no-p 'y-or-n-p)
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
