@@ -30,5 +30,3 @@
 (setq backup-directory-alist `(("." . ,--backup-directory)))
 (setq vc-make-backup-files t)
 
-;; Editing
-(electric-pair-mode 1)

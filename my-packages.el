@@ -6,6 +6,7 @@
       '(
 	clojure-mode
 	cider
+	smartparens
 	magit
 	exec-path-from-shell
 	))
