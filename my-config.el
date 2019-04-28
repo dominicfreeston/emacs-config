@@ -30,3 +30,5 @@
 (setq backup-directory-alist `(("." . ,--backup-directory)))
 (setq vc-make-backup-files t)
 
+;; Setup built-in modes
+(ido-mode 1)
