@@ -1,9 +1,13 @@
 .DS_Store
 .emacs-custom.el
 ido.last
+tramp
 
 auto-save-list/
 backups/
 elpa/
 image-dired/
 transient/
+
+eshell/history
+eshell/lastdir
