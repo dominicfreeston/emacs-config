@@ -25,10 +25,13 @@
   (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend))
 
 ;; Backups and Autosaves
-(defvar --backup-directory (concat user-emacs-directory "backups"))
-(if (not (file-exists-p --backup-directory))
-        (make-directory --backup-directory t))
-(setq backup-directory-alist `(("." . ,--backup-directory)))
+(setq temporary-file-directory (concat user-emacs-directory "backups"))
+(if (not (file-exists-p temporary-file-directory))
+    (make-directory temporary-file-directory t))
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+`((".*" ,temporary-file-directory t)))
 (setq vc-make-backup-files t)
 
 ;; Setup built-in modes
