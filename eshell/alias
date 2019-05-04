@@ -1,1 +1,3 @@
+alias gst git status
 alias bepi bundle exec pod install
+alias be bundle exec $*
