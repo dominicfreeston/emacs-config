@@ -6,18 +6,21 @@
   :config
   (exec-path-from-shell-initialize))
 
+;; Tools
+(use-package projectile)
 (use-package magit
   :bind
   ("C-x g" . magit-status))
-
 (use-package smartparens-config
   :ensure smartparens
   :config
   (smartparens-global-mode t))
 
+;; Languages
+(use-package fennel-mode)
 (use-package clojure-mode)
-
 (use-package cider)
+
 
 ;; Key-maps
 
