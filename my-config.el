@@ -36,3 +36,9 @@
 
 ;; Setup built-in modes
 (ido-mode 1)
+
+(setq ispell-program-name "aspell")
+
+(defun run-love ()
+  (interactive)
+  (run-lisp "/Applications/love.app/Contents/MacOS/love ."))
