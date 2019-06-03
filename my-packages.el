@@ -14,11 +14,16 @@
 (use-package smartparens-config
   :ensure smartparens
   :config
-  (smartparens-global-mode t))
+  (smartparens-global-mode t)
+  (show-smartparens-global-mode t))
 
 ;; Languages
 (use-package fennel-mode)
+(add-hook 'fennel-mode-hook #'smartparens-strict-mode)
+
 (use-package clojure-mode)
+(add-hook 'clojure-mode-hook #'smartparens-strict-mode)
+
 (use-package cider)
 
 
