@@ -28,6 +28,7 @@
 ;; Languages
 (use-package fennel-mode)
 (add-hook 'fennel-mode-hook #'smartparens-strict-mode)
+(setq fennel-mode-switch-to-repl-after-reload nil)
 
 (use-package clojure-mode)
 (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
