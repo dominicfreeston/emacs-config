@@ -15,7 +15,10 @@
 
 (use-package magit
   :bind
-  ("C-x g" . magit-status))
+  ("C-x g" . magit-status)
+  :config
+  (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1))
+
 (use-package smartparens-config
   :ensure smartparens
   :config
