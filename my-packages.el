@@ -26,7 +26,12 @@
   (show-smartparens-global-mode t))
 
 ;; Languages
-(use-package fennel-mode)
+(use-package fennel-mode
+  :config
+  (put 'for-each 'fennel-indent-function 1)
+  (put 'map-each 'fennel-indent-function 1)
+  (put 'flatmap-each 'fennel-indent-function 1))
+
 (add-hook 'fennel-mode-hook #'smartparens-strict-mode)
 (setq fennel-mode-switch-to-repl-after-reload nil)
 
