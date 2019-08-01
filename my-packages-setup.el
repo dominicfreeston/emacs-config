@@ -2,7 +2,7 @@
 
 ;; Setup archives and download packages
 (add-to-list 'package-archives
-             '("melpa-stable" . "https://melpa.org/packages/") t)
+             '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
 (when (not package-archive-contents)
