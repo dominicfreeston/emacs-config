@@ -51,7 +51,30 @@
 (add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
 (add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
 
+
+;; EXPAND-REGION
+;; https://github.com/magnars/expand-region.el
+;; Does what it says, continue expand with =, contract with -
+(use-package expand-region
+  :bind
+  ("C-=" . er/expand-region))
+
+;; MULTIPLE-CURSORS
+;; https://github.com/magnars/multiple-cursors.el
+(use-package multiple-cursors)
+
 ;; Languages
+
+;; MARKDOWN
+;; https://jblevins.org/projects/markdown-mode/
+;; C-c C-s for styling
+(use-package markdown-mode
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+
 (use-package fennel-mode
   :config
   (put 'for-each 'fennel-indent-function 1)
@@ -85,12 +108,12 @@
  ;; ("H-b" . sp-backward-sexp)
 
  ;;("C-<down>" . sp-down-sexp)
- ;; ("C-<up>"   . sp-backward-up-sexp)
+ ("M-s u b"   . sp-backward-up-sexp)
  ;; ("M-<down>" . sp-backward-down-sexp)
- ;; ("M-<up>"   . sp-up-sexp)
+ ("M-s u e"   . sp-up-sexp)
 
- ;; ("H-n" . sp-next-sexp)
- ;; ("H-p" . sp-previous-sexp)
+ ("M-s n" . sp-next-sexp)
+ ("M-s p" . sp-previous-sexp)
 
  ;; ("C-S-f" . sp-forward-symbol)
  ;; ("C-S-b" . sp-backward-symbol)
