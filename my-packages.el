@@ -27,11 +27,13 @@
   (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1))
 
 ;; SMARTPARENS
+;; https://github.com/Fuco1/smartparens
 (use-package smartparens-config
   :ensure smartparens
   :config
   (smartparens-global-mode t)
-  (show-smartparens-global-mode t))
+  (show-smartparens-global-mode t)
+  (setq sp-highlight-pair-overlay nil))
 
 ;; YASNIPPET
 ;; (use-package yasnippet-snippets)
