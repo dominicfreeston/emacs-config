@@ -1,10 +1,12 @@
 ;; Prettify
-(load-theme 'tango-dark)
+;; (load-theme 'tango-dark)
+;; (load-theme 'zenburn t)
 
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (global-visual-line-mode 1)
 
+;; specify font for all unicode characters
 (add-to-list 'default-frame-alist '(font . "Source Code Pro 14"))
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
@@ -22,6 +24,9 @@
 
 ;; Enable emoji, and stop the UI from freezing when trying to display them.
 (when (fboundp 'set-fontset-font)
+  ;; Apple Color Emoji doesn't seem to work
+  (when (member "Symbola" (font-family-list))
+    (set-fontset-font t 'unicode "Symbola" nil 'prepend))
   (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend))
 
 ;; Backups and Autosaves

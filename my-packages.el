@@ -8,6 +8,9 @@
   :config
   (exec-path-from-shell-initialize))
 
+;; Theme
+(use-package zenburn-theme)
+
 ;; Tools
 ;; PROJECTILE
 (use-package projectile
