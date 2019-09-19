@@ -1,5 +1,6 @@
 ;; Setup use-package
 ;; https://github.com/jwiegley/use-package
+;; https://jwiegley.github.io/use-package/keywords/
 (require 'use-package)
 
 ;; Make sure environment is same as shell on mac
@@ -56,7 +57,6 @@
 (add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
 (add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
 
-
 ;; EXPAND-REGION
 ;; https://github.com/magnars/expand-region.el
 ;; Does what it says, continue expand with =, contract with -
@@ -89,6 +89,7 @@
 (add-hook 'fennel-mode-hook #'smartparens-strict-mode)
 (setq fennel-mode-switch-to-repl-after-reload nil)
 
+;; CLOJURE
 (use-package clj-refactor)
 (defun my-clojure-mode-hook ()
     (clj-refactor-mode 1)
@@ -107,8 +108,8 @@
 
 (bind-keys
  :map smartparens-mode-map
- ;; ("H-a" . sp-beginning-of-sexp)
- ;; ("H-e" . sp-end-of-sexp)
+ ("M-s a" . sp-beginning-of-sexp)
+ ("M-s e" . sp-end-of-sexp)
  ;; ("H-f" . sp-forward-sexp)
  ;; ("H-b" . sp-backward-sexp)
 
