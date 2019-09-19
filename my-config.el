@@ -12,8 +12,9 @@
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-(setq frame-title-format nil)
-(setq inhibit-startup-screen t)
+(setq frame-title-format nil) ;; keep to bar emtpy
+(setq inhibit-startup-screen t) ;; go straight to scratch on startup
+(setq ns-pop-up-frames nil) ;; open files in same frame
 
 ;; Sensible Defaults
 (setq ring-bell-function 'ignore)
