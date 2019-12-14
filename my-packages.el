@@ -13,9 +13,33 @@
 (use-package zenburn-theme)
 
 ;; Tools
-;; PROJECTILE
-(use-package projectile
+;; IVY + PRESCIENT
+;; https://github.com/abo-abo/swiper
+(use-package ivy
   :config
+  (ivy-mode))
+
+;; https://github.com/raxod502/prescient.el
+(use-package ivy-prescient
+  :after ivy
+  :config
+  (ivy-prescient-mode))
+
+;; DUMB-JUMP
+;; https://github.com/jacktasia/dumb-jump
+;; C-M-g to go-to definition
+;; C-M-p to jump back
+;; C-M-q to preview the jump
+(use-package dumb-jump
+  :config
+  (dumb-jump-mode))
+
+;; PROJECTILE
+;; https://github.com/bbatsov/projectile
+(use-package projectile
+  :after ivy ivy-prescient
+  :config
+  (setq projectile-completion-system 'ivy)
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1))
@@ -54,8 +78,13 @@
   (setq company-idle-delay 1)
   (global-set-key (kbd "TAB") #'company-indent-or-complete-common))
 
+(use-package company-jedi)
+
 (add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
 (add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
+(defun my/python-mode-hook ()
+  (add-to-list 'company-backends 'company-jedi))
+(add-hook 'python-mode-hook 'my/python-mode-hook)
 
 ;; EXPAND-REGION
 ;; https://github.com/magnars/expand-region.el
@@ -103,6 +132,9 @@
 (add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
 
 (use-package cider)
+
+;; JAVASCRIPT
+(use-package rjsx-mode)
 
 ;; Key-maps
 

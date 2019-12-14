@@ -40,8 +40,8 @@
 `((".*" ,temporary-file-directory t)))
 (setq vc-make-backup-files t)
 
-;; Setup built-in modes
-(ido-mode 1)
+;; Setup built-in modesa
+;; (ido-mode 1)
 (setq ispell-program-name "aspell")
 
 ;; Custom-functions
