@@ -1,5 +1,6 @@
 .DS_Store
 .emacs-custom.el
+config.el
 projectile-bookmarks.eld
 ido.last
 tramp
