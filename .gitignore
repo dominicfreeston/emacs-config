@@ -1,5 +1,6 @@
 .DS_Store
 .emacs-custom.el
+projectile-bookmarks.eld
 ido.last
 tramp
 
@@ -8,6 +9,7 @@ backups/
 elpa/
 image-dired/
 transient/
+url/
 
 eshell/history
 eshell/lastdir
