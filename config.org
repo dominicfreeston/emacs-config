@@ -1,0 +1,271 @@
+* Emacs Config
+** Initial Setup
+*** Hackarounds
+hackaround for a TLS bug https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341
+
+#+BEGIN_SRC emacs-lisp
+  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+#+END_SRC
+*** Custom
+Redirects custom to hidden file - the reason for this is I've decided to avoid using the custom feature and try and do everything via this config, but it's impossible to do away without it completely
+#+BEGIN_SRC emacs-lisp
+(setq custom-file (concat user-emacs-directory ".emacs-custom.el"))
+#+END_SRC
+
+*** Setup use-package
+https://github.com/jwiegley/use-package
+https://jwiegley.github.io/use-package/keywords/
+
+#+BEGIN_SRC emacs-lisp
+  (require 'package)
+
+  ;; Setup archives and download packages
+  (add-to-list 'package-archives
+	       '("melpa" . "https://melpa.org/packages/") t)
+  (package-initialize)
+
+  (when (not package-archive-contents)
+    (message "%s" "Emacs is now refreshing its package database...")
+    (package-refresh-contents))
+
+  ;; Install use-package
+  (when (not (package-installed-p 'use-package))
+    (package-install 'use-package))
+
+  ;; Ensure all packages
+  (require 'use-package-ensure)
+  (setq use-package-always-ensure t)
+
+  (require 'use-package)
+#+END_SRC
+
+*** Theming
+#+BEGIN_SRC emacs-lisp
+  (use-package zenburn-theme)
+#+END_SRC
+
+*** Defaults
+#+BEGIN_SRC emacs-lisp
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (global-visual-line-mode 1)
+
+  ;; specify font for all unicode characters
+  (add-to-list 'default-frame-alist '(font . "Source Code Pro 14"))
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+  (add-to-list 'default-frame-alist '(ns-appearance . dark))
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+  (setq frame-title-format nil) ;; keep top bar emtpy
+  (setq inhibit-startup-screen t) ;; go straight to scratch on startup
+  (setq ns-pop-up-frames nil) ;; open files in same frame
+
+  ;; Sensible Defaults
+  (setq ring-bell-function 'ignore)
+  (setq mac-right-option-modifier nil)
+  (setq mac-function-modifier 'hyper)
+  (fset 'yes-or-no-p 'y-or-n-p)
+  (define-key global-map (kbd "RET") 'newline-and-indent)
+
+  ;; Enable emoji, and stop the UI from freezing when trying to display them.
+  (when (fboundp 'set-fontset-font)
+    ;; Apple Color Emoji doesn't seem to work
+    (when (member "Symbola" (font-family-list))
+      (set-fontset-font t 'unicode "Symbola" nil 'prepend))
+    (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend))
+
+  ;; Backups and Autosaves
+  (setq temporary-file-directory (concat user-emacs-directory "backups"))
+  (if (not (file-exists-p temporary-file-directory))
+      (make-directory temporary-file-directory t))
+  (setq backup-directory-alist
+	`((".*" . ,temporary-file-directory)))
+  (setq auto-save-file-name-transforms
+  `((".*" ,temporary-file-directory t)))
+  (setq vc-make-backup-files t)
+
+  ;; Seplling
+  (setq ispell-program-name "aspell")
+
+#+END_SRC
+
+** General Tools
+*** Ivy + Prescient
+Ivy is a autocompletion replacement for IDO - I haven't been using Swiper or Counsel so far, but they all live in the same repo:
+https://github.com/abo-abo/swiper
+
+Prescient makes the search through the autocompletion quite delightful.
+https://github.com/raxod502/prescient.el
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ivy
+    :config
+    (ivy-mode))
+
+  (use-package ivy-prescient
+    :after ivy
+    :config
+    (ivy-prescient-mode))
+#+END_SRC
+
+*** Dumb-Jump
+Useful "mostly just works" jump to definition
+https://github.com/jacktasia/dumb-jump
+
+#+BEGIN_SRC emacs-lisp
+(use-package dumb-jump
+  :config
+  (dumb-jump-mode))
+#+END_SRC
+
+C-M-g go-to definition
+C-M-p jump back
+C-M-q preview the jump
+
+*** Projectile
+Project navigation (where project often just means the git repo).
+I basically only use `C-c p f` to find file in project, but it can do a lot more.
+https://github.com/bbatsov/projectile
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :after ivy ivy-prescient
+    :config
+    (setq projectile-completion-system 'ivy)
+    (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+    (projectile-mode +1))
+#+END_SRC
+
+*** Magit
+Magit. It's amazing. But how is it pronounced?
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :bind
+    ("C-x g" . magit-status)
+    :config
+    (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1))
+#+END_SRC
+
+*** Smartparens
+Using this instead of paredit - can't remember why but it works pretty well
+https://github.com/Fuco1/smartparens
+
+#+BEGIN_SRC emacs-lisp
+  (use-package smartparens-config
+    :ensure smartparens
+    :config
+    (smartparens-global-mode t)
+    (show-smartparens-global-mode t)
+    (setq sp-highlight-pair-overlay nil))
+#+END_SRC
+
+**** Smartparens Key map
+
+#+BEGIN_SRC emacs-lisp
+  (bind-keys
+   :map smartparens-mode-map
+   ("M-s a" . sp-beginning-of-sexp)
+   ("M-s e" . sp-end-of-sexp)
+   ;; ("H-f" . sp-forward-sexp)
+   ;; ("H-b" . sp-backward-sexp)
+
+   ;;("C-<down>" . sp-down-sexp)
+   ("M-s u b"   . sp-backward-up-sexp)
+   ;; ("M-<down>" . sp-backward-down-sexp)
+   ("M-s u e"   . sp-up-sexp)
+
+   ("M-s n" . sp-next-sexp)
+   ("M-s p" . sp-previous-sexp)
+
+   ;; ("C-S-f" . sp-forward-symbol)
+   ;; ("C-S-b" . sp-backward-symbol)
+
+   ("C-<right>" . sp-forward-slurp-sexp)
+   ("C-<left>" . sp-forward-barf-sexp)
+   ("M-<left>"  . sp-backward-slurp-sexp)
+   ("M-<right>"  . sp-backward-barf-sexp)
+
+   ("C-M-t" . sp-transpose-sexp)
+   ("M-k" . sp-kill-sexp)
+   ("C-k"   . sp-kill-hybrid-sexp)
+   ;; ("M-k"   . sp-backward-kill-sexp)
+   ("C-M-w" . sp-copy-sexp)
+ 
+   ("M-[" . sp-backward-unwrap-sexp)
+   ("M-]" . sp-unwrap-sexp)
+   ("M-p" . sp-splice-sexp))
+#+END_SRC
+*** Company
+Autocompletion mode
+http://company-mode.github.io/
+https://cider.readthedocs.io/en/latest/code_completion/
+M-n / M-p to scroll
+C-s to search and C-o to stop
+C-w to see source, F1 to see documentation
+#+BEGIN_SRC emacs-lisp
+(use-package company
+  :config
+  (global-company-mode)
+  (setq company-idle-delay 1)
+  (global-set-key (kbd "TAB") #'company-indent-or-complete-common))
+#+END_SRC
+*** Expand-Region
+https://github.com/magnars/expand-region.el
+Useful for quickly selecting a logical unit (e.g a word, a paragraph, an s-expression)
+C-= to start, continue expand with =, contract with -
+#+BEGIN_SRC emacs-lisp
+(use-package expand-region
+  :bind
+  ("C-=" . er/expand-region))
+#+END_SRC
+** Language Modes
+*** Clojure
+#+BEGIN_SRC emacs-lisp
+  (use-package clojure-mode)
+  (use-package clj-refactor)
+
+  (defun my-clojure-mode-hook ()
+	(clj-refactor-mode 1)
+	(yas-minor-mode 1) ; for adding require/use/import statements
+	;; This choice of keybinding leaves cider-macroexpand-1 unbound
+	(cljr-add-keybindings-with-prefix "C-c C-c"))
+
+  (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
+  (add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
+
+  (use-package cider)
+#+END_SRC
+
+*** Markdown
+https://jblevins.org/projects/markdown-mode/
+C-c C-s for styling
+#+BEGIN_SRC emacs-lisp
+  (use-package markdown-mode
+    :commands (markdown-mode gfm-mode)
+    :mode (("README\\.md\\'" . gfm-mode)
+	   ("\\.md\\'" . markdown-mode)
+	   ("\\.markdown\\'" . markdown-mode))
+    :init (setq markdown-command "multimarkdown"))
+#+END_SRC
+
+*** Fennel
+#+BEGIN_SRC emacs-lisp
+(use-package fennel-mode
+  :config
+  (put 'for-each 'fennel-indent-function 1)
+  (put 'map-each 'fennel-indent-function 1)
+  (put 'flatmap-each 'fennel-indent-function 1))
+#+END_SRC
+
+*** Javascript
+#+BEGIN_SRC emacs-lisp
+(use-package rjsx-mode)
+#+END_SRC
+*** Python
+Not setup yet, but probably look at Jedi and Elpy
+** Custom Functions
+#+BEGIN_SRC emacs-lisp
+  (defun run-love ()
+    (interactive)
+    (run-lisp "/Applications/love.app/Contents/MacOS/love ."))
+#+END_SRC
