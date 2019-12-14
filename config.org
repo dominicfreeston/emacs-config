@@ -9,7 +9,9 @@ hackaround for a TLS bug https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341
 *** Custom
 Redirects custom to hidden file - the reason for this is I've decided to avoid using the custom feature and try and do everything via this config, but it's impossible to do away without it completely
 #+BEGIN_SRC emacs-lisp
-(setq custom-file (concat user-emacs-directory ".emacs-custom.el"))
+  (if (not (file-exists-p (concat user-emacs-directory ".emacs-custom.el")))
+      (with-temp-buffer (write-file (concat user-emacs-directory ".emacs-custom.el"))))
+  (setq custom-file (concat user-emacs-directory ".emacs-custom.el"))
 #+END_SRC
 
 *** Setup use-package
