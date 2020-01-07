@@ -254,6 +254,15 @@ C-= to start, continue expand with =, contract with -
   :bind
   ("C-=" . er/expand-region))
 #+END_SRC
+*** Ace-Window
+Nicer window switching
+https://github.com/abo-abo/ace-window
+
+#+begin_src emacs-lisp
+  (use-package ace-window
+    :config
+    (global-set-key (kbd "M-o") 'ace-window))
+#+end_src
 ** Language Modes
 *** Clojure
 #+BEGIN_SRC emacs-lisp
