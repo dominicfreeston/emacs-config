@@ -41,6 +41,17 @@ https://jwiegley.github.io/use-package/keywords/
   (require 'use-package)
 #+END_SRC
 
+*** Fix Exec path
+https://github.com/purcell/exec-path-from-shell
+This is to fix the issue where the GUI emacs path doesn't match the shell path and so various commands don't work.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package exec-path-from-shell
+    :config
+    (when (memq window-system '(mac ns))
+      (exec-path-from-shell-initialize)))
+#+END_SRC
+
 *** Theming
 #+BEGIN_SRC emacs-lisp
   (use-package zenburn-theme)
