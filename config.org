@@ -23,7 +23,9 @@ https://jwiegley.github.io/use-package/keywords/
 
   ;; Setup archives and download packages
   (add-to-list 'package-archives
-	       '("melpa" . "https://melpa.org/packages/") t)
+  '("melpa" . "https://melpa.org/packages/") t)
+  (add-to-list 'package-archives
+  '("org" . "https://orgmode.org/elpa/") t)
   (package-initialize)
 
   (when (not package-archive-contents)
@@ -103,6 +105,27 @@ This is to fix the issue where the GUI emacs path doesn't match the shell path a
 #+END_SRC
 
 ** General Tools
+*** Org
+Org mode ships with Emacs and is picked by default so we reload it to use the latest because I wanted to be able to insert code blocks more easily. Emacs 26.1 apparently overwrites the correct value of `org-structure-template-alist` so we override it again here so that `C-c C-,` works properly and we can insert blocks easily. I've not yet managed to force the upgrade so it might necessary to go to use `M-x package-list-packages RET` and find org in the list and update it manually first (one option would be to use [[https://github.com/rranelli/auto-package-update.el][auto-package-update]] but haven't made that jump so far).
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org
+    :config
+    (setq org-structure-template-alist
+	'(("a" . "export ascii")
+	  ("c" . "center")
+	  ("C" . "comment")
+	  ("e" . "example")
+	  ("E" . "export")
+	  ("h" . "export html")
+	  ("l" . "export latex")
+	  ("q" . "quote")
+	  ("s" . "src")
+	  ("v" . "verse")))
+    (org-reload)
+    :pin org)
+#+END_SRC
+
 *** Ivy + Prescient
 Ivy is a autocompletion replacement for IDO - I haven't been using Swiper or Counsel so far, but they all live in the same repo:
 https://github.com/abo-abo/swiper
