@@ -56,7 +56,7 @@ This is to fix the issue where the GUI emacs path doesn't match the shell path a
 
 *** Theming
 #+BEGIN_SRC emacs-lisp
-  (use-package zenburn-theme)
+  (use-package nord-theme)
 #+END_SRC
 
 *** Defaults
