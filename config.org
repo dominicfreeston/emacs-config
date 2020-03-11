@@ -7,7 +7,7 @@ hackaround for a TLS bug https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341
   (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 #+END_SRC
 *** Custom
-Redirects custom to hidden file - the reason for this is I've decided to avoid using the custom feature and try and do everything via this config, but it's impossible to do away without it completely
+Redirects custom to hidden file - the reason for this is I've decided to avoid using the custom feature and try and do everything via this config, but it's impossible to do away without it completely as it gets written to automatically (when installing packages, for example)
 #+BEGIN_SRC emacs-lisp
   (if (not (file-exists-p (concat user-emacs-directory ".emacs-custom.el")))
       (with-temp-buffer (write-file (concat user-emacs-directory ".emacs-custom.el"))))
