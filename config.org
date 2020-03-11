@@ -263,6 +263,29 @@ https://github.com/abo-abo/ace-window
     :config
     (global-set-key (kbd "M-o") 'ace-window))
 #+end_src
+*** NeoTree
+https://github.com/jaypei/emacs-neotree
+Bindings:
+n next line, p previous line。
+SPC or RET or TAB Open current item if it is a file. Fold/Unfold current item if it is a directory.
+U Go up a directory
+g Refresh
+A Maximize/Minimize the NeoTree Window
+H Toggle display hidden files
+O Recursively open a directory
+C-c C-n Create a file or create a directory if filename ends with a ‘/’
+C-c C-d Delete a file or a directory.
+C-c C-r Rename a file or a directory.
+C-c C-c Change the root directory.
+C-c C-p Copy a file or a directory.
+
+#+begin_src emacs-lisp
+  (use-package neotree
+    :config
+    (setq neo-smart-open t)
+    (setq neo-theme 'nerd)
+    (global-set-key [f8] 'neotree-toggle))
+#+end_src
 ** Language Modes
 *** Clojure
 #+BEGIN_SRC emacs-lisp
