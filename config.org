@@ -325,9 +325,49 @@ C-c C-s for styling
   (put 'flatmap-each 'fennel-indent-function 1))
 #+END_SRC
 
-*** Javascript
+*** Javascript and Typescript
+https://github.com/codesuki/add-node-modules-path
+This will hopefully allow for use of the project-local version of 'prettier' and any other relevant packages
+You'll need to make sure you've run `yarn install` in the project and that it does indeed contain prettier
+
+#+begin_src emacs-lisp
+  (use-package add-node-modules-path)
+#+end_src
+
+https://github.com/ananthakumaran/tide
+https://github.com/prettier/prettier-emacs/tree/
+
+Currently using rjsx-mode, but might want to switch to [[https://github.com/mooz/js2-mode][js2-mode]] when Emacs 27 comes out as js-mode is supposed to have proper support then.
+
 #+BEGIN_SRC emacs-lisp
-(use-package rjsx-mode)
+  (use-package rjsx-mode
+    :mode "\\.jsx?\\'"
+    :config
+    (setq js-indent-level 2)
+    (setq js2-strict-missing-semi-warning nil))
+
+  (use-package prettier-js)
+
+  (use-package tide
+    :ensure t
+    :config
+    (setq tide-format-options '(:indentSize 2 :tabSize 2))
+    (setq typescript-indent-level 2)
+    :after (typescript-mode company flycheck)
+    :hook ((typescript-mode . tide-setup)
+	   (typescript-mode . tide-hl-identifier-mode)
+	   (typescript-mode . add-node-modules-path)
+	   (typescript-mode . prettier-js-mode)))
+#+END_SRC
+
+*** Swift
+#+BEGIN_SRC emacs-lisp
+  (use-package swift-mode)
+  (use-package flycheck-swift
+    :config
+    (flycheck-swift-setup))
+  (setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.0.sdk")
+  (setq flycheck-swift-target "arm64-apple-ios13")
 #+END_SRC
 *** Python
 Not setup yet, but probably look at Jedi and Elpy
