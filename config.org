@@ -2,11 +2,12 @@
 ** Initial Setup
 *** Hackarounds
 hackaround for a TLS bug https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341
+(allegedly fixed in 26.3)
 
 #+BEGIN_SRC emacs-lisp
   (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 #+END_SRC
-*** Custom
+*** Hide custom file
 Redirects custom to hidden file - the reason for this is I've decided to avoid using the custom feature and try and do everything via this config, but it's impossible to do away without it completely as it gets written to automatically (when installing packages, for example)
 #+BEGIN_SRC emacs-lisp
   (if (not (file-exists-p (concat user-emacs-directory ".emacs-custom.el")))
@@ -93,10 +94,15 @@ This is to fix the issue where the GUI emacs path doesn't match the shell path a
   (setq temporary-file-directory (concat user-emacs-directory "backups"))
   (if (not (file-exists-p temporary-file-directory))
       (make-directory temporary-file-directory t))
+
   (setq backup-directory-alist
-	`((".*" . ,temporary-file-directory)))
-  (setq auto-save-file-name-transforms
-  `((".*" ,temporary-file-directory t)))
+	`((".*" . ,temporary-file-directory))
+	auto-save-file-name-transforms
+	`((".*" ,temporary-file-directory t)))
+  ;; (setq backup-directory-alist'
+	;; `((".*" . ,temporary-file-directory)))
+  ;; (setq auto-save-file-name-transforms
+	;; `(("(.*)" ,(concat temporary-file-directory "\\1") t)))
   (setq vc-make-backup-files t)
 
   ;; Seplling
@@ -370,7 +376,15 @@ Currently using rjsx-mode, but might want to switch to [[https://github.com/mooz
   (setq flycheck-swift-target "arm64-apple-ios13")
 #+END_SRC
 *** Python
-Not setup yet, but probably look at Jedi and Elpy
+Could also look at Jedi (currently trying out Elpy)
+
+#+begin_src emacs-lisp
+  (use-package elpy
+    :ensure t
+    :init
+    (elpy-enable))
+#+end_src
+
 ** Custom Functions
 #+BEGIN_SRC emacs-lisp
   (defun run-love ()
