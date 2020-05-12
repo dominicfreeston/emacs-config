@@ -11,6 +11,7 @@ elpa/
 image-dired/
 transient/
 url/
+elpy/
 
 eshell/history
 eshell/lastdir
