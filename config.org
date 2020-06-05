@@ -206,18 +206,18 @@ https://github.com/Fuco1/smartparens
 #+BEGIN_SRC emacs-lisp
   (bind-keys
    :map smartparens-mode-map
-   ("M-s a" . sp-beginning-of-sexp)
-   ("M-s e" . sp-end-of-sexp)
-   ;; ("H-f" . sp-forward-sexp)
-   ;; ("H-b" . sp-backward-sexp)
+   ("M-s M-a" . sp-beginning-of-sexp)
+   ("M-s M-e" . sp-end-of-sexp)
+   ("M-s M-f" . sp-forward-sexp)
+   ("M-s M-b" . sp-backward-sexp)
 
-   ;;("C-<down>" . sp-down-sexp)
-   ("M-s u b"   . sp-backward-up-sexp)
-   ;; ("M-<down>" . sp-backward-down-sexp)
-   ("M-s u e"   . sp-up-sexp)
+   ("M-s M-d M-b" . sp-backward-down-sexp)
+   ("M-s M-d M-f" . sp-down-sexp)
+   ("M-s M-u M-b" . sp-backward-up-sexp)
+   ("M-s M-u M-f" . sp-up-sexp)
 
-   ("M-s n" . sp-next-sexp)
-   ("M-s p" . sp-previous-sexp)
+   ("M-s M-n" . sp-next-sexp)
+   ("M-s M-p" . sp-previous-sexp)
 
    ;; ("C-S-f" . sp-forward-symbol)
    ;; ("C-S-b" . sp-backward-symbol)
@@ -232,7 +232,7 @@ https://github.com/Fuco1/smartparens
    ("C-k"   . sp-kill-hybrid-sexp)
    ;; ("M-k"   . sp-backward-kill-sexp)
    ("C-M-w" . sp-copy-sexp)
- 
+
    ("M-[" . sp-backward-unwrap-sexp)
    ("M-]" . sp-unwrap-sexp)
    ("M-p" . sp-splice-sexp))
