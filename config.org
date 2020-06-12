@@ -1,4 +1,6 @@
 * Emacs Config
+** Notes
+Catalina and Emacs don't play well [[https://spin.atomicobject.com/2019/12/12/fixing-emacs-macos-catalina/][but there's workarounds]]
 ** Initial Setup
 *** Hackarounds
 hackaround for a TLS bug https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341
@@ -67,7 +69,7 @@ This is to fix the issue where the GUI emacs path doesn't match the shell path a
   (global-visual-line-mode 1)
 
   ;; specify font for all unicode characters
-  (add-to-list 'default-frame-alist '(font . "Source Code Pro 14"))
+  (add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline 16"))
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
