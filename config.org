@@ -134,6 +134,11 @@ Org mode ships with Emacs and is picked by default so we reload it to use the la
     :pin org)
 #+END_SRC
 
+*** Ag
+#+BEGIN_SRC emacs-lisp
+  (use-package ag)
+#+END_SRC
+
 *** Ivy + Prescient
 Ivy is a autocompletion replacement for IDO - I haven't been using Swiper or Counsel so far, but they all live in the same repo:
 https://github.com/abo-abo/swiper
@@ -157,9 +162,10 @@ Useful "mostly just works" jump to definition
 https://github.com/jacktasia/dumb-jump
 
 #+BEGIN_SRC emacs-lisp
-(use-package dumb-jump
-  :config
-  (dumb-jump-mode))
+  (use-package dumb-jump
+    :config
+    (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+    (dumb-jump-mode))
 #+END_SRC
 
 C-M-g go-to definition
