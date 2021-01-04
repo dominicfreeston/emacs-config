@@ -59,7 +59,9 @@ This is to fix the issue where the GUI emacs path doesn't match the shell path a
 
 *** Theming
 #+BEGIN_SRC emacs-lisp
-  (use-package nord-theme)
+  (use-package nord-theme
+    :config
+    (load-theme 'nord t))
 #+END_SRC
 
 *** Defaults
