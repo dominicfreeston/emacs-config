@@ -53,7 +53,7 @@ This is to fix the issue where the GUI emacs path doesn't match the shell path a
 #+BEGIN_SRC emacs-lisp
   (use-package exec-path-from-shell
     :config
-    (when (memq window-system '(mac ns))
+    (when (memq window-system '(mac ns x))
       (exec-path-from-shell-initialize)))
 #+END_SRC
 
