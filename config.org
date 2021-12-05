@@ -304,6 +304,11 @@ C-c C-p Copy a file or a directory.
     (setq neo-theme 'nerd)
     (global-set-key [f8] 'neotree-toggle))
 #+end_src
+*** Minions
+#+begin_src emacs-lisp
+  (use-package minions
+    :config (minions-mode 1))
+#+end_src
 ** Language Modes
 *** Clojure
 #+BEGIN_SRC emacs-lisp
