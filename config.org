@@ -76,6 +76,8 @@ This is to fix the issue where the GUI emacs path doesn't match the shell path a
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
+  (setq line-number-mode t) ;; show line number
+  (setq column-number-mode t) ;; show column number
   (setq frame-title-format nil) ;; keep top bar emtpy
   (setq inhibit-startup-screen t) ;; go straight to scratch on startup
   (setq ns-pop-up-frames nil) ;; open files in same frame
