@@ -402,6 +402,11 @@ Could also look at Jedi (currently trying out Elpy)
     (elpy-enable))
 #+end_src
 
+*** YAML
+#+begin_src emacs-lisp
+  (use-package yaml-mode)
+#+end_src
+
 ** Custom Functions
 #+BEGIN_SRC emacs-lisp
   (defun run-love ()
