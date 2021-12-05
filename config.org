@@ -117,6 +117,8 @@ This is to fix the issue where the GUI emacs path doesn't match the shell path a
   ;; Seplling
   (setq ispell-program-name "aspell")
 
+  ;; Allow use of dired 'a' to visit next dir or buffer and close current
+  (put 'dired-find-alternate-file 'disabled nil)
 #+END_SRC
 
 ** General Tools
