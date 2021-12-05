@@ -1,6 +1,9 @@
 * Emacs Config
 ** Notes
 Catalina and Emacs don't play well [[https://spin.atomicobject.com/2019/12/12/fixing-emacs-macos-catalina/][but there's workarounds]]
+
+Edit a source code block with `C-c '`
+   
 ** Initial Setup
 *** Hackarounds
 hackaround for a TLS bug https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341
