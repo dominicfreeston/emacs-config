@@ -412,6 +412,11 @@ Could also look at Jedi (currently trying out Elpy)
   (use-package yaml-mode)
 #+end_src
 
+*** SQL
+#+begin_src emacs-lisp
+  (use-package sql-indent)
+#+end_src
+    
 ** Custom Functions
 #+BEGIN_SRC emacs-lisp
   (defun run-love ()
