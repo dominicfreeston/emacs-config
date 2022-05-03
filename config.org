@@ -391,14 +391,10 @@ You'll need to make sure you've run `yarn install` in the project and that it do
 https://github.com/ananthakumaran/tide
 https://github.com/prettier/prettier-emacs/tree/
 
-Currently using rjsx-mode, but might want to switch to [[https://github.com/mooz/js2-mode][js2-mode]] when Emacs 27 comes out as js-mode is supposed to have proper support then.
+As of Emacs 27 using js-mode with js2-minor-mode I'm not sure how to use-package to install js2-mode without making it the main mode, so might have to install it manually...
 
 #+BEGIN_SRC emacs-lisp
-  (use-package rjsx-mode
-    :mode "\\.jsx?\\'"
-    :config
-    (setq js-indent-level 2)
-    (setq js2-strict-missing-semi-warning nil))
+  (add-hook 'js-mode-hook 'js2-minor-mode)  
 
   (use-package prettier-js)
 
