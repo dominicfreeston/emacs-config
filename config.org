@@ -358,6 +358,25 @@ https://github.com/tarsius/minions
 
 #+END_SRC
 
+*** HTML/CSS
+Web mode is designed for template but trying it for html.
+
+We also hack our way into the css-mode constants to get auto-completion of missing properties.
+
+#+begin_src emacs-lisp
+  (use-package web-mode
+    :mode "\\.html?\\'")
+
+  (use-package css-mode
+    :config
+    (add-to-list 'css-property-alist '("margin-inline" margin-width))
+    (add-to-list 'css-property-alist '("margin-inline-start" margin-width))
+    (add-to-list 'css-property-alist '("margin-inline-end" margin-width))
+    ;; This is a bit mad but it adds the added properties above to the auto-completion list
+    (defconst css-property-ids
+      (mapcar #'car css-property-alist)
+      "Identifiers for properties."))
+#+end_src
 *** Markdown
 https://jblevins.org/projects/markdown-mode/
 C-c C-s for styling
