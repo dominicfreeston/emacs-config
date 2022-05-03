@@ -171,6 +171,11 @@ https://github.com/raxod502/prescient.el
     (ivy-prescient-mode))
 #+END_SRC
 
+*** FlyCheck
+#+begin_src emacs-lisp
+  (use-package flycheck
+    :hook (clojure-mode . flycheck-mode))
+#+end_src
 *** Dumb-Jump
 Useful "mostly just works" jump to definition
 https://github.com/jacktasia/dumb-jump
@@ -266,13 +271,15 @@ https://cider.readthedocs.io/en/latest/code_completion/
 M-n / M-p to scroll
 C-s to search and C-o to stop
 C-w to see source, F1 to see documentation
+
 #+BEGIN_SRC emacs-lisp
-(use-package company
-  :config
-  (global-company-mode)
-  (setq company-idle-delay 1)
-  (global-set-key (kbd "TAB") #'company-indent-or-complete-common))
+  (use-package company
+    :config
+    (global-company-mode)
+    (setq company-idle-delay 1)
+    (global-set-key (kbd "TAB") #'company-indent-or-complete-common))
 #+END_SRC
+
 *** Expand-Region
 https://github.com/magnars/expand-region.el
 Useful for quickly selecting a logical unit (e.g a word, a paragraph, an s-expression)
@@ -315,26 +322,40 @@ C-c C-p Copy a file or a directory.
     (global-set-key [f8] 'neotree-toggle))
 #+end_src
 *** Minions
+Better minor mode management. Less noisy and includes them all.
+https://github.com/tarsius/minions
 #+begin_src emacs-lisp
   (use-package minions
-    :config (minions-mode 1))
+    :config
+    (setq minions-available-modes '())
+    (setq minions-prominent-modes '(flycheck-mode))
+    (setq minions-mode-line-lighter "...")
+    (minions-mode 1))
 #+end_src
 ** Language Modes
 *** Clojure
 #+BEGIN_SRC emacs-lisp
-  (use-package clojure-mode)
+  (use-package flycheck-clj-kondo)
+
+  (use-package clojure-mode
+    :config
+    (require 'flycheck-clj-kondo))
   (use-package clj-refactor)
 
+  (use-package cider)
+
+  ;; babashka shebang support #!/usr/bin/env bb
+  (add-to-list 'interpreter-mode-alist '("bb" . clojure-mode))
+
   (defun my-clojure-mode-hook ()
-	(clj-refactor-mode 1)
-	(yas-minor-mode 1) ; for adding require/use/import statements
-	;; This choice of keybinding leaves cider-macroexpand-1 unbound
-	(cljr-add-keybindings-with-prefix "C-c C-c"))
+    (clj-refactor-mode 1)
+    (yas-minor-mode 1) ; for adding require/use/import statements
+    ;; This choice of keybinding leaves cider-macroexpand-1 unbound
+    (cljr-add-keybindings-with-prefix "C-c C-c"))
 
   (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
   (add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
 
-  (use-package cider)
 #+END_SRC
 
 *** Markdown
