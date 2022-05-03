@@ -114,6 +114,11 @@ This is to fix the issue where the GUI emacs path doesn't match the shell path a
 	;; `(("(.*)" ,(concat temporary-file-directory "\\1") t)))
   (setq vc-make-backup-files t)
 
+  ;; Disable lock files as they cause some tools (mostly file watchers) to crash
+  ;; I only ever use one instance of emacs and I'm on a single user machine
+  ;; So hopefully it won't be an issue!
+  (setq create-lockfiles nil)
+
   ;; Seplling
   (setq ispell-program-name "aspell")
 
