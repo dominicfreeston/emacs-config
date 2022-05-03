@@ -3,7 +3,10 @@
 Catalina and Emacs don't play well [[https://spin.atomicobject.com/2019/12/12/fixing-emacs-macos-catalina/][but there's workarounds]]
 
 Edit a source code block with `C-c '`
-   
+
+Sources of inspiration:
+https://github.com/dpsutton/tangled/blob/master/init.org
+
 ** Initial Setup
 *** Hackarounds
 hackaround for a TLS bug https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341
@@ -74,7 +77,7 @@ This is to fix the issue where the GUI emacs path doesn't match the shell path a
   (global-visual-line-mode 1)
 
   ;; specify font for all unicode characters
-  (add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline 16"))
+  ;; (add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline 16"))
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -177,19 +180,18 @@ https://github.com/raxod502/prescient.el
     :hook (clojure-mode . flycheck-mode))
 #+end_src
 *** Dumb-Jump
-Useful "mostly just works" jump to definition
+Useful "mostly just works" jump to definition. It uses xref.
 https://github.com/jacktasia/dumb-jump
 
 #+BEGIN_SRC emacs-lisp
   (use-package dumb-jump
     :config
-    (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+    (add-hook 'xref-backend-functions #'dumb-jump-xref-activate 99)
     (dumb-jump-mode))
 #+END_SRC
 
-C-M-g go-to definition
-C-M-p jump back
-C-M-q preview the jump
+M-. go-to definition
+M-, jump back
 
 *** Projectile
 Project navigation (where project often just means the git repo).
