@@ -360,6 +360,15 @@ https://github.com/tarsius/minions
 
 #+END_SRC
 
+*** Fennel
+#+BEGIN_SRC emacs-lisp
+(use-package fennel-mode
+  :config
+  (put 'for-each 'fennel-indent-function 1)
+  (put 'map-each 'fennel-indent-function 1)
+  (put 'flatmap-each 'fennel-indent-function 1))
+#+END_SRC
+
 *** HTML/CSS
 Web mode is designed for template but trying it for html.
 
@@ -379,27 +388,6 @@ We also hack our way into the css-mode constants to get auto-completion of missi
       (mapcar #'car css-property-alist)
       "Identifiers for properties."))
 #+end_src
-*** Markdown
-https://jblevins.org/projects/markdown-mode/
-C-c C-s for styling
-#+BEGIN_SRC emacs-lisp
-  (use-package markdown-mode
-    :commands (markdown-mode gfm-mode)
-    :mode (("README\\.md\\'" . gfm-mode)
-	   ("\\.md\\'" . markdown-mode)
-	   ("\\.markdown\\'" . markdown-mode))
-    :init (setq markdown-command "multimarkdown"))
-#+END_SRC
-
-*** Fennel
-#+BEGIN_SRC emacs-lisp
-(use-package fennel-mode
-  :config
-  (put 'for-each 'fennel-indent-function 1)
-  (put 'map-each 'fennel-indent-function 1)
-  (put 'flatmap-each 'fennel-indent-function 1))
-#+END_SRC
-
 *** Javascript and Typescript
 https://github.com/codesuki/add-node-modules-path
 This will hopefully allow for use of the project-local version of 'prettier' and any other relevant packages
@@ -431,15 +419,18 @@ As of Emacs 27 using js-mode with js2-minor-mode I'm not sure how to use-package
 	   (typescript-mode . prettier-js-mode)))
 #+END_SRC
 
-*** Swift
+*** Markdown
+https://jblevins.org/projects/markdown-mode/
+C-c C-s for styling
 #+BEGIN_SRC emacs-lisp
-  (use-package swift-mode)
-  (use-package flycheck-swift
-    :config
-    (flycheck-swift-setup))
-  (setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.0.sdk")
-  (setq flycheck-swift-target "arm64-apple-ios13")
+  (use-package markdown-mode
+    :commands (markdown-mode gfm-mode)
+    :mode (("README\\.md\\'" . gfm-mode)
+	   ("\\.md\\'" . markdown-mode)
+	   ("\\.markdown\\'" . markdown-mode))
+    :init (setq markdown-command "multimarkdown"))
 #+END_SRC
+
 *** Python
 Could also look at Jedi (currently trying out Elpy)
 
@@ -450,16 +441,30 @@ Could also look at Jedi (currently trying out Elpy)
     (elpy-enable))
 #+end_src
 
-*** YAML
-#+begin_src emacs-lisp
-  (use-package yaml-mode)
-#+end_src
+*** Rust
+#+BEGIN_SRC emacs-lisp
+  (use-package rust-mode)
+#+END_SRC
 
 *** SQL
 #+begin_src emacs-lisp
   (use-package sql-indent)
 #+end_src
     
+*** Swift
+#+BEGIN_SRC emacs-lisp
+  (use-package swift-mode)
+  (use-package flycheck-swift
+    :config
+    (flycheck-swift-setup))
+  (setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.0.sdk")
+  (setq flycheck-swift-target "arm64-apple-ios13")
+#+END_SRC
+*** YAML
+#+begin_src emacs-lisp
+  (use-package yaml-mode)
+#+end_src
+
 ** Custom Functions
 #+BEGIN_SRC emacs-lisp
   (defun run-love ()
