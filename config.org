@@ -432,8 +432,8 @@ As of Emacs 27 using js-mode with js2-minor-mode I'm not sure how to use-package
 #+BEGIN_SRC emacs-lisp
   (add-hook 'js-mode-hook 'js2-minor-mode)  
 
+  (use-package json-mode)
   (use-package prettier-js)
-
   (use-package tide
     :ensure t
     :config
