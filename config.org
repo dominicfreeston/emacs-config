@@ -183,6 +183,17 @@ Org mode ships with Emacs and is picked by default so we reload it to use the la
   (use-package ag)
 #+END_SRC
 
+*** Avy
+https://github.com/abo-abo/avy
+#+begin_src emacs-lisp
+  (use-package avy
+    :after (isearch)
+    :bind
+    (("M-j" . avy-goto-char-timer))
+    :config
+    (define-key isearch-mode-map (kbd "C-'") 'avy-isearch))
+#+end_src
+
 *** Ivy + Prescient
 Ivy is a autocompletion replacement for IDO - I haven't been using Swiper or Counsel so far, but they all live in the same repo:
 https://github.com/abo-abo/swiper
@@ -213,8 +224,7 @@ https://github.com/jacktasia/dumb-jump
 #+BEGIN_SRC emacs-lisp
   (use-package dumb-jump
     :config
-    (add-hook 'xref-backend-functions #'dumb-jump-xref-activate 99)
-    (dumb-jump-mode))
+    (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 #+END_SRC
 
 M-. go-to definition
