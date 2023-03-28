@@ -534,6 +534,20 @@ Could also look at Jedi (currently trying out Elpy)
   (setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.0.sdk")
   (setq flycheck-swift-target "arm64-apple-ios13")
 #+END_SRC
+*** Terraform
+C-c C-f to toggle outline-mode folding
+
+#+begin_src emacs-lisp
+  (use-package terraform-mode
+    :config
+    (defun my-terraform-mode-init ()
+      ;; if you want to use outline-minor-mode
+      (outline-minor-mode 1)
+      )
+
+    (add-hook 'terraform-mode-hook 'my-terraform-mode-init))
+#+end_src
+
 *** YAML
 #+begin_src emacs-lisp
   (use-package yaml-mode)
