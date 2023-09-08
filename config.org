@@ -207,7 +207,7 @@ https://github.com/abo-abo/swiper
 Prescient makes the search through the autocompletion quite delightful.
 https://github.com/raxod502/prescient.el
 
-#+BEGIN_SRC emacs-lisp
+##+BEGIN_SRC emacs-lisp
   (use-package ivy
     :config
     (ivy-mode))
@@ -216,6 +216,29 @@ https://github.com/raxod502/prescient.el
     :after ivy
     :config
     (ivy-prescient-mode))
+#+END_SRC
+
+*** Vertico + Prescient
+#+BEGIN_SRC emacs-lisp
+  (use-package vertico
+    :init
+    (vertico-mode))
+
+  (use-package vertico-directory
+    :after vertico
+    :ensure nil
+    ;; More convenient directory navigation commands
+    :bind (:map vertico-map
+		("RET" . vertico-directory-enter)
+		("DEL" . vertico-directory-delete-char)
+		("M-DEL" . vertico-directory-delete-word))
+    ;; Tidy shadowed file names
+    :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
+  (use-package vertico-prescient
+    :after vertico
+    :config
+    (vertico-prescient-mode))
 #+END_SRC
 
 *** FlyCheck
@@ -242,7 +265,7 @@ I basically only use `C-c p f` to find file in project, but it can do a lot more
 https://github.com/bbatsov/projectile
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
-    :after ivy ivy-prescient
+    :after vertico vertico-prescient
     :config
     (setq projectile-completion-system 'ivy)
     (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
