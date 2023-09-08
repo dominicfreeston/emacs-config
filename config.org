@@ -382,6 +382,7 @@ C-c C-p Copy a file or a directory.
     :config
     (setq neo-smart-open t)
     (setq neo-theme 'nerd)
+    (setq neo-window-fixed-size nil)
     (global-set-key [f8] 'neotree-toggle))
 #+end_src
 *** Minions
