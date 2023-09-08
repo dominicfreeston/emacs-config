@@ -434,6 +434,11 @@ https://github.com/tarsius/minions
 
 #+END_SRC
 
+*** Docker
+#+BEGIN_SRC emacs-lisp
+  (use-package dockerfile-mode)
+#+END_SRC
+
 *** Fennel
 #+BEGIN_SRC emacs-lisp
 (use-package fennel-mode
