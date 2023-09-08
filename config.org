@@ -8,6 +8,17 @@ Sources of inspiration:
 https://github.com/dpsutton/tangled/blob/master/init.org
 
 ** Initial Setup
+*** Startup
+Taken from Bedrock
+https://git.sr.ht/~ashton314/emacs-bedrock/tree/main/item/early-init.el
+#+BEGIN_SRC emacs-lisp
+  ;; Startup speed, annoyance suppression
+  (setq gc-cons-threshold 10000000)
+  (setq byte-compile-warnings '(not obsolete))
+  (setq warning-suppress-log-types '((comp) (bytecomp)))
+  (setq native-comp-async-report-warnings-errors 'silent)
+#+END_SRC
+
 *** Hackarounds
 hackaround for a TLS bug https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341
 (allegedly fixed in 26.3)
@@ -71,6 +82,9 @@ This is to fix the issue where the GUI emacs path doesn't match the shell path a
 #+END_SRC
 
 *** Defaults
+
+Hacked together from things like prelude and bedrock etc
+
 #+BEGIN_SRC emacs-lisp
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
@@ -81,12 +95,26 @@ This is to fix the issue where the GUI emacs path doesn't match the shell path a
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  (add-to-list 'default-frame-alist '(background-color . "#000000"))
 
   (setq line-number-mode t) ;; show line number
   (setq column-number-mode t) ;; show column number
   (setq frame-title-format nil) ;; keep top bar emtpy
   (setq inhibit-startup-screen t) ;; go straight to scratch on startup
   (setq ns-pop-up-frames nil) ;; open files in same frame
+  (setq initial-major-mode 'fundamental-mode)  ;; default in *scratch*
+
+  ;; Automatically reread from disk if the underlying file changes
+  (setq auto-revert-interval 1)
+  (setq auto-revert-check-vc-info t)
+  (global-auto-revert-mode)
+
+  ;; Fix archaic defaults
+  (setq sentence-end-double-space nil)
+
+  ;; Make right-click do something sensible
+  (when (display-graphic-p)
+    (context-menu-mode))
 
   ;; Sensible Defaults
   (setq ring-bell-function 'ignore)
@@ -95,12 +123,17 @@ This is to fix the issue where the GUI emacs path doesn't match the shell path a
   (fset 'yes-or-no-p 'y-or-n-p)
   (define-key global-map (kbd "RET") 'newline-and-indent)
 
-  ;; Enable emoji, and stop the UI from freezing when trying to display them.
-  (when (fboundp 'set-fontset-font)
-    ;; Apple Color Emoji doesn't seem to work
-    (when (member "Symbola" (font-family-list))
-      (set-fontset-font t 'unicode "Symbola" nil 'prepend))
-    (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend))
+  ;; Minibuffer
+  (setq enable-recursive-minibuffers t) ;; dangerous?
+  (setq completions-detailed t) ;; show annotations
+
+  (savehist-mode)
+
+  ;; Cursor
+  (blink-cursor-mode -1)
+  (let ((hl-line-hooks '(text-mode-hook prog-mode-hook)))
+    (mapc (lambda (hook) (add-hook hook 'hl-line-mode)) hl-line-hooks))
+
 
   ;; Backups and Autosaves
   (setq temporary-file-directory (concat user-emacs-directory "backups"))
@@ -111,10 +144,6 @@ This is to fix the issue where the GUI emacs path doesn't match the shell path a
 	`((".*" . ,temporary-file-directory))
 	auto-save-file-name-transforms
 	`((".*" ,temporary-file-directory t)))
-  ;; (setq backup-directory-alist'
-	;; `((".*" . ,temporary-file-directory)))
-  ;; (setq auto-save-file-name-transforms
-	;; `(("(.*)" ,(concat temporary-file-directory "\\1") t)))
   (setq vc-make-backup-files t)
 
   ;; Disable lock files as they cause some tools (mostly file watchers) to crash
@@ -130,6 +159,17 @@ This is to fix the issue where the GUI emacs path doesn't match the shell path a
 #+END_SRC
 
 ** General Tools
+*** Which Key
+
+shows a popup of available keybindings when typing a long key sequence (e.g. C-x ...)
+
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :ensure t
+    :config
+    (which-key-mode))
+#+END_SRC
+
 *** Multiple cursors
 
 #+BEGIN_SRC emacs-lisp
@@ -195,7 +235,7 @@ https://github.com/abo-abo/avy
   (use-package avy
     :after (isearch)
     :bind
-    (("M-j" . avy-goto-char-timer))
+    (("M-j" . avy-goto-char))
     :config
     (define-key isearch-mode-map (kbd "C-'") 'avy-isearch))
 #+end_src
