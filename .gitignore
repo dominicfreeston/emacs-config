@@ -5,13 +5,16 @@ projectile-bookmarks.eld
 ido.last
 tramp
 
-auto-save-list/
-backups/
-elpa/
-image-dired/
-transient/
-url/
-elpy/
+/.cache/
+/eln-cache/
+/elpa/
+/history
+/transient/
+/auto-save-list/
+/eshell/
+/projects
 
-eshell/history
-eshell/lastdir
+/image-dired/
+/url/
+/elpy/
+/backups/
