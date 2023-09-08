@@ -130,6 +130,11 @@ This is to fix the issue where the GUI emacs path doesn't match the shell path a
 #+END_SRC
 
 ** General Tools
+*** Multiple cursors
+
+#+BEGIN_SRC emacs-lisp
+  (use-package multiple-cursors)
+#+END_SRC
 *** Vterm
 
 https://github.com/akermu/emacs-libvterm
