@@ -267,12 +267,11 @@ https://github.com/abo-abo/avy
 *** Embark
 
 #+begin_src emacs-lisp
-  (use-package embark-consult)
-
   (use-package embark
     :demand t
     :after avy
     :bind (("C-c e" . embark-act))
+
     :init
     ;; Add the option to run embark when using avy
     (defun bedrock/avy-action-embark (pt)
@@ -286,7 +285,12 @@ https://github.com/abo-abo/avy
 
     ;; After invoking avy-goto-char-timer, hit "." to run embark at the next
     ;; candidate you select
-    (setf (alist-get ?. avy-dispatch-alist) 'bedrock/avy-action-embark))
+    (setf (alist-get ?. avy-dispatch-alist) 'bedrock/avy-action-embark)
+    :config)
+
+  (use-package embark-consult
+    :hook
+    (embark-collect-mode . consult-preview-at-point-mode))
 
 #+end_src
 
