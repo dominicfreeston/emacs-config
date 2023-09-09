@@ -202,26 +202,7 @@ https://github.com/akermu/emacs-libvterm
 
 #+END_SRC
 
-*** Org
-Org mode ships with Emacs and is picked by default so we reload it to use the latest because I wanted to be able to insert code blocks more easily. Emacs 26.1 apparently overwrites the correct value of `org-structure-template-alist` so we override it again here so that `C-c C-,` works properly and we can insert blocks easily. I've not yet managed to force the upgrade so it might necessary to go to use `M-x package-list-packages RET` and find org in the list and update it manually first (one option would be to use [[https://github.com/rranelli/auto-package-update.el][auto-package-update]] but haven't made that jump so far).
 
-#+BEGIN_SRC emacs-lisp
-  (use-package org
-    :config
-    (setq org-structure-template-alist
-	'(("a" . "export ascii")
-	  ("c" . "center")
-	  ("C" . "comment")
-	  ("e" . "example")
-	  ("E" . "export")
-	  ("h" . "export html")
-	  ("l" . "export latex")
-	  ("q" . "quote")
-	  ("s" . "src")
-	  ("v" . "verse")))
-    (org-reload)
-    :pin org)
-#+END_SRC
 
 *** Ag
 You need to install ag and have it on your path for this to work.
@@ -240,25 +221,7 @@ https://github.com/abo-abo/avy
     (define-key isearch-mode-map (kbd "C-'") 'avy-isearch))
 #+end_src
 
-*** Ivy + Prescient
-Ivy is a autocompletion replacement for IDO - I haven't been using Swiper or Counsel so far, but they all live in the same repo:
-https://github.com/abo-abo/swiper
-
-Prescient makes the search through the autocompletion quite delightful.
-https://github.com/raxod502/prescient.el
-
-##+BEGIN_SRC emacs-lisp
-  (use-package ivy
-    :config
-    (ivy-mode))
-
-  (use-package ivy-prescient
-    :after ivy
-    :config
-    (ivy-prescient-mode))
-#+END_SRC
-
-*** Vertico + Prescient
+*** Vertico + Orderless
 #+BEGIN_SRC emacs-lisp
   (use-package vertico
     :init
@@ -275,38 +238,41 @@ https://github.com/raxod502/prescient.el
     ;; Tidy shadowed file names
     :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
-  (use-package vertico-prescient
-    :after vertico
-    :config
-    (vertico-prescient-mode))
+  (use-package orderless
+    :ensure t
+    :custom
+    (completion-styles '(orderless basic))
+    (completion-category-overrides '((file (styles basic partial-completion)))))
+
 #+END_SRC
 
 *** Consult
-
 #+begin_src emacs-lisp
   (use-package consult
-  ;; Other good thingsn to bind: consult-ripgrep, consult-line-multi,
-  ;; consult-history, consult-outline
-  :bind (("C-x b" . consult-buffer) ; orig. switch-to-buffer
-	 ("M-y" . consult-yank-pop) ; orig. yank-pop
-	 ("C-s" . consult-line))    ; orig. isearch
-  :config
-  ;; Narrowing lets you restrict results to certain groups of candidates
-  (setq consult-narrow-key "<"))
+    ;; Other good things to bind: consult-ripgrep, consult-line-multi,
+    ;; consult-history, consult-outline
+    :bind (("C-x b" . consult-buffer) ; orig. switch-to-buffer
+	   ("M-y" . consult-yank-pop) ; orig. yank-pop
+	   ("C-s" . consult-line))    ; orig. isearch
+    :config
+    ;; Narrowing lets you restrict results to certain groups of candidates
+    (setq consult-narrow-key "<"))
 
   (use-package consult-projectile
-    :after projectile
-    :config
-    (define-key projectile-mode-map (kbd "C-c p p") 'consult-projectile)) ;; super-charged projectile search
+    :after consult projectile
+    :bind (:map projectile-command-map
+	   ("p" . consult-projectile)))
 #+end_src
 
 *** Embark
 
 #+begin_src emacs-lisp
+  (use-package embark-consult)
+
   (use-package embark
     :demand t
     :after avy
-    :bind (("C-c C-e" . embark-act))
+    :bind (("C-c e" . embark-act))
     :init
     ;; Add the option to run embark when using avy
     (defun bedrock/avy-action-embark (pt)
@@ -322,7 +288,6 @@ https://github.com/raxod502/prescient.el
     ;; candidate you select
     (setf (alist-get ?. avy-dispatch-alist) 'bedrock/avy-action-embark))
 
-  (use-package embark-consult)
 #+end_src
 
 *** FlyCheck
@@ -349,9 +314,8 @@ I basically only use `C-c p f` to find file in project, but it can do a lot more
 https://github.com/bbatsov/projectile
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
-    :after vertico vertico-prescient
+    :after vertico
     :config
-    (setq projectile-completion-system 'ivy)
     (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
     (projectile-mode +1))
