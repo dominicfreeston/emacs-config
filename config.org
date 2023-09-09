@@ -239,7 +239,6 @@ https://github.com/abo-abo/avy
     :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
   (use-package orderless
-    :ensure t
     :custom
     (completion-styles '(orderless basic))
     (completion-category-overrides '((file (styles basic partial-completion)))))
@@ -257,11 +256,6 @@ https://github.com/abo-abo/avy
     :config
     ;; Narrowing lets you restrict results to certain groups of candidates
     (setq consult-narrow-key "<"))
-
-  (use-package consult-projectile
-    :after consult projectile
-    :bind (:map projectile-command-map
-	   ("p" . consult-projectile)))
 #+end_src
 
 *** Embark
@@ -294,6 +288,41 @@ https://github.com/abo-abo/avy
 
 #+end_src
 
+*** Eglot
+
+#+begin_src emacs-lisp
+  (use-package eglot
+    ;; no :ensure t here because it's built-in
+
+    ;; Configure hooks to automatically turn-on eglot for selected modes
+					  ; :hook
+					  ; (((python-mode ruby-mode elixir-mode) . eglot))
+
+    :custom
+    (eglot-send-changes-idle-time 0.1)
+
+    :config
+    (fset #'jsonrpc--log-event #'ignore)  ; massive perf boost---don't log every event  
+    (setq eldoc-echo-area-prefer-doc-buffer t)
+    ;; I'm just too used to how cider does it for now, leave out the docs
+    (add-to-list 'eglot-stay-out-of 'eldoc)
+    ;; pass extra arguments to clojure-lsp (though :hover config now irrelevant while not hooking into eldoc)
+    ;; (add-to-list 'eglot-server-programs
+    ;; 	       `(clojure-mode . ("clojure-lsp" :initializationOptions
+    ;; 				 (:hover (:clojuredocs
+    ;; 					  :json-false
+    ;; 					  :hide-file-location?
+    ;; 					  t
+    ;; 					  :arity-on-same-line?
+    ;; 					  t)))))
+    )
+
+  ;; Eglot can't navigate to inside jars by itself
+  (use-package jarchive
+    :init
+    (jarchive-setup))
+#+end_src
+
 *** FlyCheck
 #+begin_src emacs-lisp
   (use-package flycheck
@@ -318,11 +347,15 @@ I basically only use `C-c p f` to find file in project, but it can do a lot more
 https://github.com/bbatsov/projectile
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
-    :after vertico
     :config
     (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-    (projectile-mode +1))
+
+    (projectile-mode +1)
+    :bind (:map projectile-command-map
+		("p" . consult-projectile)))
+
+  (use-package consult-projectile)
 #+END_SRC
 
 *** Magit
@@ -477,23 +510,6 @@ https://github.com/tarsius/minions
   (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
   (add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
 
-  (use-package lsp-mode
-    :ensure t
-    :hook ((clojure-mode . lsp)
-	   (clojurec-mode . lsp)
-	   (clojurescript-mode . lsp))
-    :config
-    ;; add paths to your local installation of project mgmt tools, like lein
-    ;; (setenv "PATH" (concat
-    ;;                 "/usr/local/bin" path-separator
-		     ;; (getenv "PATH")))
-    (dolist (m '(clojure-mode
-		 clojurec-mode
-		 clojurescript-mode
-		 clojurex-mode))
-       (add-to-list 'lsp-language-id-configuration `(,m . "clojure")))
-    ;; (setq lsp-clojure-server-command '("/path/to/clojure-lsp"))
-  ) ;; Optional: In case `clojure-lsp` is not in your $PATH
 
 #+END_SRC
 
