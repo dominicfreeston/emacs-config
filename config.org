@@ -287,7 +287,7 @@ https://github.com/abo-abo/avy
   (use-package embark
     :demand t
     :after avy
-    :bind (("C-c e" . embark-act))
+    :bind (("C-." . embark-act))
 
     :init
     ;; Add the option to run embark when using avy
