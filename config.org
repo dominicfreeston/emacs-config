@@ -135,6 +135,11 @@ Hacked together from things like prelude and bedrock etc
     (mapc (lambda (hook) (add-hook hook 'hl-line-mode)) hl-line-hooks))
 
 
+  ;; Window splits
+  (setq
+   split-width-threshold 80
+   split-height-threshold 80)
+
   ;; Backups and Autosaves
   (setq temporary-file-directory (concat user-emacs-directory "backups"))
   (if (not (file-exists-p temporary-file-directory))
