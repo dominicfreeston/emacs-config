@@ -79,7 +79,42 @@ This is to fix the issue where the GUI emacs path doesn't match the shell path a
   (use-package nord-theme
     :config
     (load-theme 'nord t))
+
+  (defun dcf--pick-a-font-size ()
+    "Tries to pick a good font size based on screen size."
+    (let ((size 8))
+      (dolist (l (display-monitor-attributes-list))
+	(let ((size-cand (/ (nth 4 (assoc 'geometry l)) 175)))
+	  (setq size (max size size-cand))))
+      size))
+
+  (add-to-list 'default-frame-alist '(font . (concat "Fira Code "(number-to-string (dcf--pick-a-font-size)))))
 #+END_SRC
+
+*** Ligatures
+
+#+begin_src emacs-lisp
+  (use-package ligature
+    :config
+    ;; Enable the www ligature in every possible major mode
+    (ligature-set-ligatures 't '("www"))
+
+    ;; Enable ligatures in programming modes                                                           
+    (ligature-set-ligatures
+     'prog-mode
+     '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\" "{-" "::"
+       ":::" ":=" "!!" "!=" "!==" "-}" "----" "-->" "->" "->>"
+       "-<" "-<<" "-~" "#{" "#[" "##" "###" "####" "#(" "#?" "#_"
+       "#_(" ".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*" "/**"
+       "/=" "/==" "/>" "//" "///" "&&" "||" "||=" "|=" "|>" "^=" "$>"
+       "++" "+++" "+>" "=:=" "==" "===" "==>" "=>" "=>>" "<="
+       "=<<" "=/=" ">-" ">=" ">=>" ">>" ">>-" ">>=" ">>>" "<*"
+       "<*>" "<|" "<|>" "<$" "<$>" "<!--" "<-" "<--" "<->" "<+"
+       "<+>" "<=" "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<"
+       "<~" "<~~" "</" "</>" "~@" "~-" "~>" "~~" "~~>" "%%"))
+
+    (global-ligature-mode 't))
+#+end_src
 
 *** Defaults
 
