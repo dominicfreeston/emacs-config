@@ -81,14 +81,20 @@ This is to fix the issue where the GUI emacs path doesn't match the shell path a
     (load-theme 'nord t))
 
   (defun dcf--pick-a-font-size ()
-    "Tries to pick a good font size based on screen size."
+    "Tries to pick a good font size (in range 8-13) based on screen size."
     (let ((size 8))
       (dolist (l (display-monitor-attributes-list))
-	(let ((size-cand (/ (nth 4 (assoc 'geometry l)) 175)))
+	(let* ((px (nth 4 (assoc 'geometry l)))
+	       (mm (nth 2 (assoc 'mm-size l)))
+	       (ratio (/ (float mm) px))
+	       (size-cand (min 13 (floor (* 80 ratio)))))
 	  (setq size (max size size-cand))))
       size))
 
-  (add-to-list 'default-frame-alist '(font . (concat "Fira Code "(number-to-string (dcf--pick-a-font-size)))))
+  ;(set-frame-font (concat "Fira Code " (number-to-string (dcf--pick-a-font-size))))
+
+  (add-to-list 'default-frame-alist `(font . ,(concat "Fira Code " (number-to-string (dcf--pick-a-font-size)))))
+
 #+END_SRC
 
 *** Ligatures
