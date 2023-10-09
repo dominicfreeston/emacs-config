@@ -205,6 +205,12 @@ Hacked together from things like prelude and bedrock etc
 #+END_SRC
 
 ** General Tools
+*** Editor Config
+#+begin_src emacs-lisp
+  (use-package editorconfig
+    :config
+    (editorconfig-mode 1))
+#+end_src
 *** Which Key
 
 shows a popup of available keybindings when typing a long key sequence (e.g. C-x ...)
@@ -247,7 +253,6 @@ https://github.com/akermu/emacs-libvterm
     (define-key vterm-mode-map [(control return)]   #'vterm-toggle-insert-cd))
 
 #+END_SRC
-
 
 
 *** Ag
