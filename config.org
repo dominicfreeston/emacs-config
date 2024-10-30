@@ -177,9 +177,9 @@ Hacked together from things like prelude and bedrock etc
 
 
   ;; Window splits
-  (setq
-   split-width-threshold 80
-   split-height-threshold 80)
+   (setq
+    split-width-threshold 160
+    split-height-threshold 80)
 
   ;; Backups and Autosaves
   (setq temporary-file-directory (concat user-emacs-directory "backups"))
