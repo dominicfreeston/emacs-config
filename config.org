@@ -246,12 +246,6 @@ https://github.com/akermu/emacs-libvterm
     (define-key vterm-mode-map (kbd "C-k") #'vterm-send-C-k-with-kill-ring)
     (add-to-list 'sp-ignore-modes-list 'vterm-mode))
 
-  (use-package vterm-toggle
-    :config
-    (global-set-key [S-f9] 'vterm-toggle)
-    (global-set-key [C-f9] 'vterm-toggle-cd)
-    (define-key vterm-mode-map [(control return)]   #'vterm-toggle-insert-cd))
-
 #+END_SRC
 
 
