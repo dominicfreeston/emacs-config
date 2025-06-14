@@ -26,6 +26,8 @@ hackaround for a TLS bug https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341
 #+BEGIN_SRC emacs-lisp
   (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 #+END_SRC
+
+
 *** Hide custom file
 Redirects custom to hidden file - the reason for this is I've decided to avoid using the custom feature and try and do everything via this config, but it's impossible to do away without it completely as it gets written to automatically (when installing packages, for example)
 #+BEGIN_SRC emacs-lisp
@@ -652,35 +654,11 @@ C-c C-s for styling
     :init (setq markdown-command "multimarkdown"))
 #+END_SRC
 
-*** Python
-Could also look at Jedi (currently trying out Elpy)
-
-#+begin_src emacs-lisp
-  (use-package elpy
-    :ensure t
-    :init
-    (elpy-enable))
-#+end_src
-
-*** Rust
-#+BEGIN_SRC emacs-lisp
-  (use-package rust-mode)
-#+END_SRC
-
 *** SQL
 #+begin_src emacs-lisp
   (use-package sql-indent)
 #+end_src
     
-*** Swift
-#+BEGIN_SRC emacs-lisp
-  (use-package swift-mode)
-  (use-package flycheck-swift
-    :config
-    (flycheck-swift-setup))
-  (setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.0.sdk")
-  (setq flycheck-swift-target "arm64-apple-ios13")
-#+END_SRC
 *** Terraform
 C-c C-f to toggle outline-mode folding
 
@@ -689,8 +667,7 @@ C-c C-f to toggle outline-mode folding
     :config
     (defun my-terraform-mode-init ()
       ;; if you want to use outline-minor-mode
-      (outline-minor-mode 1)
-      )
+      (outline-minor-mode 1))
 
     (add-hook 'terraform-mode-hook 'my-terraform-mode-init))
 #+end_src
@@ -699,10 +676,3 @@ C-c C-f to toggle outline-mode folding
 #+begin_src emacs-lisp
   (use-package yaml-mode)
 #+end_src
-
-** Custom Functions
-#+BEGIN_SRC emacs-lisp
-  (defun run-love ()
-    (interactive)
-    (run-lisp "/Applications/love.app/Contents/MacOS/love ."))
-#+END_SRC
